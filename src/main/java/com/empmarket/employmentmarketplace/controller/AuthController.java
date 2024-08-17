@@ -2,7 +2,7 @@ package com.empmarket.employmentmarketplace.controller;
 
 import com.empmarket.employmentmarketplace.dto.AuthenticationResponse;
 import com.empmarket.employmentmarketplace.dto.LoginDto;
-import com.empmarket.employmentmarketplace.util.JWTUtil;
+import com.empmarket.employmentmarketplace.util.SecurityUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +22,7 @@ public class AuthController {
 
     private final AuthenticationManager authenticationManager;
 
-    private final JWTUtil jwtUtil;
+    private final SecurityUtil securityUtil;
 
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(@Valid @RequestBody LoginDto loginDto) {
@@ -32,7 +32,7 @@ public class AuthController {
         Authentication authentication = authenticationManager.authenticate(authToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String access_token = jwtUtil.generateToken(authentication);
+        String access_token = securityUtil.generateToken(authentication);
         AuthenticationResponse res = new AuthenticationResponse();
         res.setAccessToken(access_token);
 
