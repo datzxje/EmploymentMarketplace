@@ -3,16 +3,20 @@ package com.empmarket.employmentmarketplace.service.user;
 import com.empmarket.employmentmarketplace.dto.SignupDto;
 import com.empmarket.employmentmarketplace.dto.UserDto;
 import com.empmarket.employmentmarketplace.dto.UserResponseDto;
+import com.empmarket.employmentmarketplace.entity.Company;
 import com.empmarket.employmentmarketplace.entity.User;
 import com.empmarket.employmentmarketplace.repository.UserRepository;
+import com.empmarket.employmentmarketplace.specification.GenericSpecification;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -54,6 +58,35 @@ public class UserServiceImpl implements UserService {
         userResponseDto.setUsers(userPage.stream().map(User::getUserDto).collect(Collectors.toList()));
 
         return userResponseDto;
+    }
+
+    public List<UserDto> searchUsers(String name, String email, String predicateType,
+                                  int pageNumber, int pageSize, String sortBy, String sortDir) {
+        GenericSpecification<User> builder = new GenericSpecification<>();
+        if (name != null) {
+            builder.with("name", "=", name, predicateType);
+        }
+        if (email != null) {
+            builder.with("email", "=", email, predicateType);
+        }
+
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name())
+                ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+        List<User> users = userRepository.findAll(builder.build(), pageable).getContent();
+        return users.stream()
+                .map(this::toUserDto)
+                .collect(Collectors.toList());
+    }
+
+    private UserDto toUserDto(User user) {
+        UserDto userDto = new UserDto();
+        userDto.setId(user.getId());
+        userDto.setName(user.getName());
+        userDto.setEmail(user.getEmail());
+        return userDto;
     }
 
     public boolean updateUser(Long userID, UserDto userDto) {

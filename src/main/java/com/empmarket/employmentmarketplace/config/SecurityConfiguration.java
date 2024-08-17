@@ -28,7 +28,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-import static com.empmarket.employmentmarketplace.util.JWTUtil.JWT_ALGO;
+import static com.empmarket.employmentmarketplace.util.SecurityUtil.JWT_ALGO;
 
 @Configuration
 @EnableWebSecurity

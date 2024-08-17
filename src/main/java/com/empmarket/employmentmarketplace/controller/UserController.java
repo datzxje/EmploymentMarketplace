@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 public class UserController {
 
     private final UserService userService;
@@ -43,6 +43,17 @@ public class UserController {
     @GetMapping("/users/{pageNumber}")
     public ResponseEntity<?> getAllUsers(@PathVariable int pageNumber) {
         return ResponseEntity.ok(userService.getAllUsers(pageNumber));
+    }
+
+    @GetMapping("/users/search")
+    public ResponseEntity<?> searchUsers(@RequestParam(required = false) String name,
+                                         @RequestParam(required = false) String email,
+                                         @RequestParam(required = false, defaultValue = "AND") String predicateType,
+                                         @RequestParam(defaultValue = "0") int pageNumber,
+                                         @RequestParam(defaultValue = "6") int pageSize,
+                                         @RequestParam(required = false) String sortBy,
+                                         @RequestParam(required = false) String sortDir) {
+        return ResponseEntity.ok(userService.searchUsers(name, email, predicateType, pageNumber, pageSize, sortBy, sortDir));
     }
 
     @PutMapping("/user/{userId}")
