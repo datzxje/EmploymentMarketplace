@@ -5,6 +5,8 @@ import com.empmarket.employmentmarketplace.dto.UserDto;
 import com.empmarket.employmentmarketplace.dto.UserResponseDto;
 import com.empmarket.employmentmarketplace.entity.Company;
 import com.empmarket.employmentmarketplace.entity.User;
+import com.empmarket.employmentmarketplace.mapper.UserMapper;
+import com.empmarket.employmentmarketplace.repository.CompanyRepository;
 import com.empmarket.employmentmarketplace.repository.UserRepository;
 import com.empmarket.employmentmarketplace.specification.GenericSpecification;
 import jakarta.persistence.EntityNotFoundException;
@@ -28,15 +30,22 @@ public class UserServiceImpl implements UserService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final UserMapper userMapper = UserMapper.INSTANCE;
+
+    private final CompanyRepository companyRepository;
+
     public UserDto createUser(SignupDto signupDto) {
         String hashPassword = passwordEncoder.encode(signupDto.getPassword());
-        User user = new User();
-        user.setName(signupDto.getName());
-        user.setEmail(signupDto.getEmail());
+        User user = userMapper.toEntity(signupDto);
         user.setPassword(hashPassword);
 
+        if (user.getCompany() != null) {
+            Optional<Company> companyOptional = companyRepository.findById(user.getCompany().getId());
+            user.setCompany(companyOptional.orElse(null));
+        }
+
         User savedUser = userRepository.save(user);
-        return savedUser.getUserDto();
+        return toUserDto(savedUser);
     }
 
     public UserDto getUserById(Long userID) {
@@ -83,9 +92,22 @@ public class UserServiceImpl implements UserService {
 
     private UserDto toUserDto(User user) {
         UserDto userDto = new UserDto();
+        SignupDto.CompanyUser companyUser = new SignupDto.CompanyUser();
+
         userDto.setId(user.getId());
         userDto.setName(user.getName());
         userDto.setEmail(user.getEmail());
+        userDto.setAddress(user.getAddress());
+        userDto.setAge(user.getAge());
+        userDto.setGender(user.getGender());
+        userDto.setCreatedAt(user.getCreatedAt());
+        userDto.setUpdatedAt(user.getUpdatedAt());
+
+        if(user.getCompany() != null) {
+            companyUser.setId(user.getCompany().getId());
+            companyUser.setName(user.getCompany().getName());
+            userDto.setCompany(companyUser);
+        }
         return userDto;
     }
 
@@ -94,8 +116,12 @@ public class UserServiceImpl implements UserService {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
 
-            user.setName(userDto.getName());
-            user.setEmail(userDto.getEmail());
+            userMapper.updateUserFromDto(userDto, user);
+
+            if (user.getCompany() != null) {
+                Optional<Company> companyOptional = companyRepository.findById(user.getCompany().getId());
+                user.setCompany(companyOptional.orElse(null));
+            }
 
             userRepository.save(user);
             return true;
@@ -110,6 +136,22 @@ public class UserServiceImpl implements UserService {
         } else {
             throw new EntityNotFoundException("User not found");
         }
+    }
+
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public void updateUserToken(String token, String email) {
+        User currentUser = getUserByEmail(email);
+        if(currentUser != null) {
+            currentUser.setRefreshToken(token);
+            userRepository.save(currentUser);
+        }
+    }
+
+    public User getUserByRefreshTokenAndEmail(String token, String email) {
+        return userRepository.findByRefreshTokenAndEmail(token, email);
     }
 }
 

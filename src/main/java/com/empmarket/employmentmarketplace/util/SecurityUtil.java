@@ -1,5 +1,7 @@
 package com.empmarket.employmentmarketplace.util;
 
+import com.empmarket.employmentmarketplace.dto.AuthenticationResponse;
+import com.nimbusds.jose.util.Base64;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -11,6 +13,8 @@ import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
@@ -24,22 +28,59 @@ public class SecurityUtil {
 
     public static final MacAlgorithm JWT_ALGO = MacAlgorithm.HS256;
 
-    @Value("${jwt.token-validity-time}")
-    private Long jwtExpiredTime;
+    @Value("${jwt.secret}")
+    private String jwtKey;
 
-    public String generateToken(Authentication authentication) {
+    @Value("${jwt.access-token-validity-time}")
+    private Long accessTokenExpiredTime;
+
+    @Value("${jwt.refresh-token-validity-time}")
+    private Long refreshTokenExpiredTime;
+
+    public String generateAccessToken(String email, AuthenticationResponse.UserLogin userLogin) {
         Instant now = Instant.now();
-        Instant validity = now.plus(jwtExpiredTime, ChronoUnit.SECONDS);
+        Instant validity = now.plus(accessTokenExpiredTime, ChronoUnit.SECONDS);
 
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuedAt(now)
                 .expiresAt(validity)
-                .subject(authentication.getName())
-                .claim("authorities", authentication)
+                .subject(email)
+                .claim("user", userLogin)
                 .build();
 
         JwsHeader jwsHeader = JwsHeader.with(JWT_ALGO).build();
         return jwtEncoder.encode(JwtEncoderParameters.from(jwsHeader,claims)).getTokenValue();
+    }
+
+    public String generateRefreshToken(String email, AuthenticationResponse.UserLogin userLogin) {
+        Instant now = Instant.now();
+        Instant validity = now.plus(refreshTokenExpiredTime, ChronoUnit.SECONDS);
+
+        JwtClaimsSet claims = JwtClaimsSet.builder()
+                .issuedAt(now)
+                .expiresAt(validity)
+                .subject(email)
+                .claim("user", userLogin)
+                .build();
+
+        JwsHeader jwsHeader = JwsHeader.with(JWT_ALGO).build();
+        return jwtEncoder.encode(JwtEncoderParameters.from(jwsHeader,claims)).getTokenValue();
+    }
+
+    private SecretKey getSecretKey() {
+        byte[] keyBytes = Base64.from(jwtKey).decode();
+        return new SecretKeySpec(keyBytes, 0, keyBytes.length, JWT_ALGO.getName());
+    }
+
+    public Jwt checkValidRefreshToken(String token) {
+        NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder.withSecretKey(
+                getSecretKey()).macAlgorithm(JWT_ALGO).build();
+        try {
+            return jwtDecoder.decode(token);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            throw e;
+        }
     }
 
     public static Optional<String> getCurrentUserLogin() {

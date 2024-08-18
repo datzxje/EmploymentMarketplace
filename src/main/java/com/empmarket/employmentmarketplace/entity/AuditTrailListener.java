@@ -21,6 +21,9 @@ public class AuditTrailListener {
                     SecurityUtil.getCurrentUserLogin().get() : "");
             log.info("Company created by: " + company.getCreatedBy());
         }
+        else if (entity instanceof User user) {
+            user.setCreatedAt(Instant.now());
+        }
     }
 
     @PreUpdate
@@ -30,6 +33,9 @@ public class AuditTrailListener {
             company.setUpdatedBy(SecurityUtil.getCurrentUserLogin().isPresent() ?
                     SecurityUtil.getCurrentUserLogin().get() : "");
             log.info("Company updated by: " + company.getUpdatedBy());
+        }
+        else if (entity instanceof User user) {
+            user.setUpdatedAt(Instant.now());
         }
     }
 }

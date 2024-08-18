@@ -3,6 +3,7 @@ package com.empmarket.employmentmarketplace.service.user;
 import com.empmarket.employmentmarketplace.dto.SignupDto;
 import com.empmarket.employmentmarketplace.dto.UserDto;
 import com.empmarket.employmentmarketplace.dto.UserResponseDto;
+import com.empmarket.employmentmarketplace.entity.User;
 
 import java.util.List;
 
@@ -21,4 +22,9 @@ public interface UserService {
     List<UserDto> searchUsers(String name, String email, String predicateType,
                              int pageNumber, int pageSize, String sortBy, String sortDir);
 
+    User getUserByEmail(String email);
+
+    void updateUserToken(String token, String email);
+
+    User getUserByRefreshTokenAndEmail(String token, String email);
 }

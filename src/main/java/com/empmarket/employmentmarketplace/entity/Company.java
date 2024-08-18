@@ -1,10 +1,13 @@
 package com.empmarket.employmentmarketplace.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.Instant;
+import java.util.List;
 
 @EntityListeners(AuditTrailListener.class)
 @Entity
@@ -35,4 +38,7 @@ public class Company {
 
     private String updatedBy;
 
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
+    List<User> users;
 }
