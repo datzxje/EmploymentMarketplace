@@ -15,7 +15,7 @@
 
 - Authentication, Authorization
 - CRUD
-- Paging
+- Pagination
 - Filtering
 - Searching
 
