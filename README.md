@@ -4,8 +4,9 @@
     - Java
     - Spring Boot
     - Spring Security
-    - Maven
+    - Spring Security’s OAuth 2.0
     - JWT (JSON Web Token)
+    - Maven
     - Lombok
     - MySQL
 - IDE:
