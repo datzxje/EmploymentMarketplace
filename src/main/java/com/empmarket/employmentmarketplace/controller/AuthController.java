@@ -49,7 +49,7 @@ public class AuthController {
 
         if (currentUser != null) {
             LoginResponseDto.UserLogin userLogin = new LoginResponseDto.UserLogin(
-                    currentUser.getId(), currentUser.getEmail(), currentUser.getName());
+                    currentUser.getId(), currentUser.getEmail(), currentUser.getName(), currentUser.getRole());
             res.setUser(userLogin);
         }
 
@@ -102,7 +102,7 @@ public class AuthController {
 
         if (currentUserDB != null) {
             LoginResponseDto.UserLogin userLogin = new LoginResponseDto.UserLogin(
-                    currentUserDB.getId(), currentUserDB.getEmail(), currentUserDB.getName());
+                    currentUserDB.getId(), currentUserDB.getEmail(), currentUserDB.getName(), currentUser.getRole());
             res.setUser(userLogin);
         }
 

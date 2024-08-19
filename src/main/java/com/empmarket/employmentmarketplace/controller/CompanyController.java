@@ -21,7 +21,7 @@ public class CompanyController {
         return ResponseEntity.status(HttpStatus.OK).body(companyService.createCompany(companyDto));
     }
 
-    @GetMapping("/company/{id}")
+    @GetMapping("/companies/{id}")
     public ResponseEntity<?> getCompanyById(@Valid @PathVariable Long id) {
         try {
             return ResponseEntity.ok(companyService.getCompanyById(id));

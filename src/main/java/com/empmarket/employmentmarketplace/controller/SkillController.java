@@ -25,7 +25,7 @@ public class SkillController {
         return ResponseEntity.ok(skillService.createSkill(skillDto));
     }
 
-    @GetMapping("/skill/{id}")
+    @GetMapping("/skills/{id}")
     public ResponseEntity<?> getSkillById(@Valid @PathVariable Long id) {
         try {
             return ResponseEntity.ok(skillService.getSkillById(id));
