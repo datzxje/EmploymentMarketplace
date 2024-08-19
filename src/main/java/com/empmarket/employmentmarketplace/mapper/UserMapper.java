@@ -1,7 +1,7 @@
 package com.empmarket.employmentmarketplace.mapper;
 
-import com.empmarket.employmentmarketplace.dto.SignupDto;
-import com.empmarket.employmentmarketplace.dto.UserDto;
+import com.empmarket.employmentmarketplace.dto.req.SignupDto;
+import com.empmarket.employmentmarketplace.dto.req.UserDto;
 import com.empmarket.employmentmarketplace.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

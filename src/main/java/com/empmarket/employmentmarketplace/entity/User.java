@@ -1,7 +1,7 @@
 package com.empmarket.employmentmarketplace.entity;
 
-import com.empmarket.employmentmarketplace.dto.SignupDto;
-import com.empmarket.employmentmarketplace.dto.UserDto;
+import com.empmarket.employmentmarketplace.dto.req.SignupDto;
+import com.empmarket.employmentmarketplace.dto.req.UserDto;
 import com.empmarket.employmentmarketplace.enums.GenderEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;

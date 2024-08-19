@@ -1,7 +1,7 @@
 package com.empmarket.employmentmarketplace.service.company;
 
-import com.empmarket.employmentmarketplace.dto.CompanyDto;
-import com.empmarket.employmentmarketplace.dto.CompanyResponseDto;
+import com.empmarket.employmentmarketplace.dto.req.CompanyDto;
+import com.empmarket.employmentmarketplace.dto.res.CompanyResponseDto;
 import com.empmarket.employmentmarketplace.entity.Company;
 import com.empmarket.employmentmarketplace.mapper.CompanyMapper;
 import com.empmarket.employmentmarketplace.repository.CompanyRepository;
@@ -46,7 +46,7 @@ public class CompanyServiceImpl implements CompanyService {
         if (optionalCompany.isPresent()) {
             return optionalCompany.map(companyMapper::toDto).orElse(null);
         } else {
-            throw new EntityNotFoundException("User not found");
+            throw new EntityNotFoundException("Company not found");
         }
     }
 
@@ -100,8 +100,8 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     public void deleteCompany(Long companyId) {
-        Optional<Company> optionalUser = companyRepository.findById(companyId);
-        if (optionalUser.isPresent()) {
+        Optional<Company> optionalCompany = companyRepository.findById(companyId);
+        if (optionalCompany.isPresent()) {
             companyRepository.deleteById(companyId);
         } else {
             throw new EntityNotFoundException("Company not found");

@@ -1,6 +1,6 @@
 package com.empmarket.employmentmarketplace.controller;
 
-import com.empmarket.employmentmarketplace.dto.CompanyDto;
+import com.empmarket.employmentmarketplace.dto.req.CompanyDto;
 import com.empmarket.employmentmarketplace.service.company.CompanyService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;

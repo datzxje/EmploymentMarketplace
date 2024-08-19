@@ -1,7 +1,7 @@
 package com.empmarket.employmentmarketplace.controller;
 
-import com.empmarket.employmentmarketplace.dto.SignupDto;
-import com.empmarket.employmentmarketplace.dto.UserDto;
+import com.empmarket.employmentmarketplace.dto.req.SignupDto;
+import com.empmarket.employmentmarketplace.dto.req.UserDto;
 import com.empmarket.employmentmarketplace.service.user.UserService;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;

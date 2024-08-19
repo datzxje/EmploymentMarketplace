@@ -1,7 +1,7 @@
 package com.empmarket.employmentmarketplace.controller;
 
-import com.empmarket.employmentmarketplace.dto.AuthenticationResponse;
-import com.empmarket.employmentmarketplace.dto.LoginDto;
+import com.empmarket.employmentmarketplace.dto.res.AuthenticationResponse;
+import com.empmarket.employmentmarketplace.dto.req.LoginDto;
 import com.empmarket.employmentmarketplace.entity.User;
 import com.empmarket.employmentmarketplace.service.user.UserService;
 import com.empmarket.employmentmarketplace.util.SecurityUtil;
@@ -14,7 +14,6 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;

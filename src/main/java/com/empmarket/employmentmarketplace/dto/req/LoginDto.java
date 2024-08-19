@@ -1,4 +1,4 @@
-package com.empmarket.employmentmarketplace.dto;
+package com.empmarket.employmentmarketplace.dto.req;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;

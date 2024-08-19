@@ -1,4 +1,4 @@
-package com.empmarket.employmentmarketplace.dto;
+package com.empmarket.employmentmarketplace.dto.res;
 
 import lombok.*;
 
