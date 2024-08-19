@@ -1,6 +1,6 @@
 package com.empmarket.employmentmarketplace.util;
 
-import com.empmarket.employmentmarketplace.dto.AuthenticationResponse;
+import com.empmarket.employmentmarketplace.dto.res.AuthenticationResponse;
 import com.nimbusds.jose.util.Base64;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

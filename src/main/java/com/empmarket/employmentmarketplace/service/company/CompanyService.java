@@ -1,11 +1,10 @@
 package com.empmarket.employmentmarketplace.service.company;
 
-import com.empmarket.employmentmarketplace.dto.CompanyDto;
-import com.empmarket.employmentmarketplace.dto.CompanyResponseDto;
+import com.empmarket.employmentmarketplace.dto.req.CompanyDto;
+import com.empmarket.employmentmarketplace.dto.res.CompanyResponseDto;
 import com.empmarket.employmentmarketplace.entity.Company;
 
 import java.util.List;
-import java.util.Map;
 
 public interface CompanyService {
     CompanyDto createCompany(CompanyDto companyDto);

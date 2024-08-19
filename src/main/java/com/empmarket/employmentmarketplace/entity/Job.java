@@ -1,6 +1,6 @@
 package com.empmarket.employmentmarketplace.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.empmarket.employmentmarketplace.enums.LevelEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -11,8 +11,8 @@ import java.util.List;
 @EntityListeners(AuditTrailListener.class)
 @Entity
 @Data
-@Table(name = "companies")
-public class Company {
+@Table(name = "jobs")
+public class Job {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,29 +20,39 @@ public class Company {
 
     private String name;
 
+    private String location;
+
+    private Double salary;
+
+    private Integer quantity;
+
+    private LevelEnum level;
+
     @Column(columnDefinition = "MEDIUMTEXT")
     private String description;
 
-    private String address;
+    private Instant startDate;
 
-    private String logo;
+    private Instant endDate;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss a", timezone = "GMT + 7")
+    private boolean isActive;
+
     private Instant createdAt;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss a", timezone = "GMT + 7")
     private Instant updatedAt;
 
     private String createdBy;
 
     private String updatedBy;
 
-    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonIgnore
-    List<User> users;
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
 
-    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JsonIgnore
-    List<Job> jobs;
+    @JoinTable(name = "job_skill", joinColumns = @JoinColumn(name = "job_id"),
+    inverseJoinColumns = @JoinColumn(name = "skill_id"))
+    private List<Skill> skills;
 
 }

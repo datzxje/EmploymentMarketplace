@@ -1,19 +1,13 @@
-package com.empmarket.employmentmarketplace.dto;
+package com.empmarket.employmentmarketplace.dto.req;
 
 import lombok.Data;
 
 import java.time.Instant;
 
 @Data
-public class CompanyDto {
+public class SkillDto {
 
     private String name;
-
-    private String description;
-
-    private String address;
-
-    private String logo;
 
     private Instant createdAt;
 
@@ -22,4 +16,5 @@ public class CompanyDto {
     private String createdBy;
 
     private String updatedBy;
+
 }

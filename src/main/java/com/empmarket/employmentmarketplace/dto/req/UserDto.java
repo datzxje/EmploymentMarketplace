@@ -1,14 +1,14 @@
-package com.empmarket.employmentmarketplace.dto;
+package com.empmarket.employmentmarketplace.dto.req;
 
 import com.empmarket.employmentmarketplace.enums.GenderEnum;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.time.Instant;
 
 @Data
-public class SignupDto {
+public class UserDto {
+
+    private Long id;
 
     private String name;
 
@@ -24,15 +24,8 @@ public class SignupDto {
 
     private Instant createdAt;
 
-    private CompanyUser company;
+    private Instant updatedAt;
 
-    @Getter
-    @Setter
-    public static class CompanyUser {
-
-        private Long id;
-
-        private String name;
-    }
+    private SignupDto.CompanyUser company;
 
 }

@@ -1,8 +1,8 @@
 package com.empmarket.employmentmarketplace.service.user;
 
-import com.empmarket.employmentmarketplace.dto.SignupDto;
-import com.empmarket.employmentmarketplace.dto.UserDto;
-import com.empmarket.employmentmarketplace.dto.UserResponseDto;
+import com.empmarket.employmentmarketplace.dto.req.SignupDto;
+import com.empmarket.employmentmarketplace.dto.req.UserDto;
+import com.empmarket.employmentmarketplace.dto.res.UserResponseDto;
 import com.empmarket.employmentmarketplace.entity.Company;
 import com.empmarket.employmentmarketplace.entity.User;
 import com.empmarket.employmentmarketplace.mapper.UserMapper;

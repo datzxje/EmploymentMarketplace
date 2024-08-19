@@ -1,5 +1,6 @@
-package com.empmarket.employmentmarketplace.dto;
+package com.empmarket.employmentmarketplace.dto.res;
 
+import com.empmarket.employmentmarketplace.dto.req.CompanyDto;
 import lombok.Data;
 
 import java.util.List;
