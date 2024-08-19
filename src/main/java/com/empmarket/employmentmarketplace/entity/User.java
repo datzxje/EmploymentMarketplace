@@ -4,10 +4,12 @@ import com.empmarket.employmentmarketplace.dto.req.SignupDto;
 import com.empmarket.employmentmarketplace.dto.req.UserDto;
 import com.empmarket.employmentmarketplace.enums.GenderEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.Instant;
+import java.util.List;
 
 @EntityListeners(AuditTrailListener.class)
 @Entity
@@ -43,6 +45,10 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Resume> resumes;
 
     public UserDto getUserDto() {
         UserDto userDto = new UserDto();
