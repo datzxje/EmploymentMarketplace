@@ -4,10 +4,13 @@ import com.empmarket.employmentmarketplace.dto.req.SignupDto;
 import com.empmarket.employmentmarketplace.dto.req.UserDto;
 import com.empmarket.employmentmarketplace.dto.res.UserResponseDto;
 import com.empmarket.employmentmarketplace.entity.Company;
+import com.empmarket.employmentmarketplace.entity.Role;
 import com.empmarket.employmentmarketplace.entity.User;
 import com.empmarket.employmentmarketplace.mapper.UserMapper;
 import com.empmarket.employmentmarketplace.repository.CompanyRepository;
+import com.empmarket.employmentmarketplace.repository.RoleRepository;
 import com.empmarket.employmentmarketplace.repository.UserRepository;
+import com.empmarket.employmentmarketplace.service.role.RoleService;
 import com.empmarket.employmentmarketplace.specification.GenericSpecification;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +37,8 @@ public class UserServiceImpl implements UserService {
 
     private final CompanyRepository companyRepository;
 
+    private final RoleRepository roleRepository;
+
     public UserDto createUser(SignupDto signupDto) {
         String hashPassword = passwordEncoder.encode(signupDto.getPassword());
         User user = userMapper.toEntity(signupDto);
@@ -42,6 +47,11 @@ public class UserServiceImpl implements UserService {
         if (user.getCompany() != null) {
             Optional<Company> companyOptional = companyRepository.findById(user.getCompany().getId());
             user.setCompany(companyOptional.orElse(null));
+        }
+
+        if (user.getRole() != null) {
+            Optional<Role> roleOptional = roleRepository.findById(user.getRole().getId());
+            user.setRole(roleOptional.orElse(null));
         }
 
         User savedUser = userRepository.save(user);
@@ -108,6 +118,7 @@ public class UserServiceImpl implements UserService {
             companyUser.setName(user.getCompany().getName());
             userDto.setCompany(companyUser);
         }
+
         return userDto;
     }
 

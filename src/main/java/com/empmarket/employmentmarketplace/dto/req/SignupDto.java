@@ -1,5 +1,6 @@
 package com.empmarket.employmentmarketplace.dto.req;
 
+import com.empmarket.employmentmarketplace.entity.Role;
 import com.empmarket.employmentmarketplace.enums.GenderEnum;
 import lombok.Data;
 import lombok.Getter;
@@ -25,6 +26,8 @@ public class SignupDto {
     private Instant createdAt;
 
     private CompanyUser company;
+
+    private Role role;
 
     @Getter
     @Setter

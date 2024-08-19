@@ -33,9 +33,20 @@ public class AuditTrailListener {
             skill.setCreatedAt(Instant.now());
             skill.setCreatedBy(SecurityUtil.getCurrentUserLogin().isPresent() ?
                     SecurityUtil.getCurrentUserLogin().get() : "");
-        } else if (entity instanceof Resume resume) {
+        }
+        else if (entity instanceof Resume resume) {
             resume.setCreatedAt(Instant.now());
             resume.setCreatedBy(SecurityUtil.getCurrentUserLogin().isPresent() ?
+                    SecurityUtil.getCurrentUserLogin().get() : "");
+        }
+        else if (entity instanceof Role role) {
+            role.setCreatedAt(Instant.now());
+            role.setCreatedBy(SecurityUtil.getCurrentUserLogin().isPresent() ?
+                    SecurityUtil.getCurrentUserLogin().get() : "");
+        }
+        else if (entity instanceof Permission permission) {
+            permission.setCreatedAt(Instant.now());
+            permission.setCreatedBy(SecurityUtil.getCurrentUserLogin().isPresent() ?
                     SecurityUtil.getCurrentUserLogin().get() : "");
         }
     }
@@ -64,6 +75,15 @@ public class AuditTrailListener {
         else if (entity instanceof Resume resume) {
             resume.setUpdatedAt(Instant.now());
             resume.setUpdatedBy(SecurityUtil.getCurrentUserLogin().isPresent() ?
+                    SecurityUtil.getCurrentUserLogin().get() : "");
+        }
+        else if (entity instanceof Role role) {
+            role.setUpdatedAt(Instant.now());
+            role.setUpdatedBy(SecurityUtil.getCurrentUserLogin().isPresent() ?
+                    SecurityUtil.getCurrentUserLogin().get() : "");
+        } else if (entity instanceof Permission permission) {
+            permission.setUpdatedAt(Instant.now());
+            permission.setUpdatedBy(SecurityUtil.getCurrentUserLogin().isPresent() ?
                     SecurityUtil.getCurrentUserLogin().get() : "");
         }
     }

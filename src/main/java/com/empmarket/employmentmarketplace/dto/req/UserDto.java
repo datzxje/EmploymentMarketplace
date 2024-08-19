@@ -1,5 +1,6 @@
 package com.empmarket.employmentmarketplace.dto.req;
 
+import com.empmarket.employmentmarketplace.entity.Role;
 import com.empmarket.employmentmarketplace.enums.GenderEnum;
 import lombok.Data;
 
@@ -27,5 +28,7 @@ public class UserDto {
     private Instant updatedAt;
 
     private SignupDto.CompanyUser company;
+
+    private Role role;
 
 }
