@@ -28,9 +28,14 @@ public class AuditTrailListener {
             job.setCreatedAt(Instant.now());
             job.setCreatedBy(SecurityUtil.getCurrentUserLogin().isPresent() ?
                     SecurityUtil.getCurrentUserLogin().get() : "");
-        } else if (entity instanceof Skill skill) {
+        }
+        else if (entity instanceof Skill skill) {
             skill.setCreatedAt(Instant.now());
             skill.setCreatedBy(SecurityUtil.getCurrentUserLogin().isPresent() ?
+                    SecurityUtil.getCurrentUserLogin().get() : "");
+        } else if (entity instanceof Resume resume) {
+            resume.setCreatedAt(Instant.now());
+            resume.setCreatedBy(SecurityUtil.getCurrentUserLogin().isPresent() ?
                     SecurityUtil.getCurrentUserLogin().get() : "");
         }
     }
@@ -50,9 +55,15 @@ public class AuditTrailListener {
             job.setUpdatedAt(Instant.now());
             job.setUpdatedBy(SecurityUtil.getCurrentUserLogin().isPresent() ?
                     SecurityUtil.getCurrentUserLogin().get() : "");
-        } else if (entity instanceof Skill skill) {
+        }
+        else if (entity instanceof Skill skill) {
             skill.setUpdatedAt(Instant.now());
             skill.setUpdatedBy(SecurityUtil.getCurrentUserLogin().isPresent() ?
+                    SecurityUtil.getCurrentUserLogin().get() : "");
+        }
+        else if (entity instanceof Resume resume) {
+            resume.setUpdatedAt(Instant.now());
+            resume.setUpdatedBy(SecurityUtil.getCurrentUserLogin().isPresent() ?
                     SecurityUtil.getCurrentUserLogin().get() : "");
         }
     }

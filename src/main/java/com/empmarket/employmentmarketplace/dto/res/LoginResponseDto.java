@@ -3,7 +3,7 @@ package com.empmarket.employmentmarketplace.dto.res;
 import lombok.*;
 
 @Data
-public class AuthenticationResponse {
+public class LoginResponseDto {
 
     private String accessToken;
 

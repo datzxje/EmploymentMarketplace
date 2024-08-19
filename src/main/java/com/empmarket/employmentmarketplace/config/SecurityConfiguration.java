@@ -59,7 +59,7 @@ public class SecurityConfiguration {
                 .cors(Customizer.withDefaults())
                 .authorizeRequests(
                 authz -> authz
-                        .requestMatchers("/api/v1/auth/**").permitAll()
+                        .requestMatchers("/api/v1/auth/**", "/resources/**").permitAll()
                         .anyRequest().authenticated())
                 .exceptionHandling(
                         exceptions -> exceptions

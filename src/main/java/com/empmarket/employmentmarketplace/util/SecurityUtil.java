@@ -1,6 +1,6 @@
 package com.empmarket.employmentmarketplace.util;
 
-import com.empmarket.employmentmarketplace.dto.res.AuthenticationResponse;
+import com.empmarket.employmentmarketplace.dto.res.LoginResponseDto;
 import com.nimbusds.jose.util.Base64;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,7 +37,7 @@ public class SecurityUtil {
     @Value("${jwt.refresh-token-validity-time}")
     private Long refreshTokenExpiredTime;
 
-    public String generateAccessToken(String email, AuthenticationResponse.UserLogin userLogin) {
+    public String generateAccessToken(String email, LoginResponseDto.UserLogin userLogin) {
         Instant now = Instant.now();
         Instant validity = now.plus(accessTokenExpiredTime, ChronoUnit.SECONDS);
 
@@ -52,7 +52,7 @@ public class SecurityUtil {
         return jwtEncoder.encode(JwtEncoderParameters.from(jwsHeader,claims)).getTokenValue();
     }
 
-    public String generateRefreshToken(String email, AuthenticationResponse.UserLogin userLogin) {
+    public String generateRefreshToken(String email, LoginResponseDto.UserLogin userLogin) {
         Instant now = Instant.now();
         Instant validity = now.plus(refreshTokenExpiredTime, ChronoUnit.SECONDS);
 

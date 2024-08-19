@@ -1,6 +1,6 @@
 package com.empmarket.employmentmarketplace.controller;
 
-import com.empmarket.employmentmarketplace.dto.res.AuthenticationResponse;
+import com.empmarket.employmentmarketplace.dto.res.LoginResponseDto;
 import com.empmarket.employmentmarketplace.dto.req.LoginDto;
 import com.empmarket.employmentmarketplace.entity.User;
 import com.empmarket.employmentmarketplace.service.user.UserService;
@@ -36,7 +36,7 @@ public class AuthController {
     private Long refreshTokenExpiredTime;
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> login(@Valid @RequestBody LoginDto loginDto) {
+    public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginDto loginDto) {
         UsernamePasswordAuthenticationToken authToken
                 = new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
 
@@ -44,11 +44,11 @@ public class AuthController {
         SecurityContext sc = SecurityContextHolder.getContext();
         sc.setAuthentication(authentication);
 
-        AuthenticationResponse res = new AuthenticationResponse();
+        LoginResponseDto res = new LoginResponseDto();
         User currentUser = userService.getUserByEmail(loginDto.getEmail());
 
         if (currentUser != null) {
-            AuthenticationResponse.UserLogin userLogin = new AuthenticationResponse.UserLogin(
+            LoginResponseDto.UserLogin userLogin = new LoginResponseDto.UserLogin(
                     currentUser.getId(), currentUser.getEmail(), currentUser.getName());
             res.setUser(userLogin);
         }
@@ -75,7 +75,7 @@ public class AuthController {
         String email = SecurityUtil.getCurrentUserLogin().isPresent() ?
                 SecurityUtil.getCurrentUserLogin().get() : null;
         User currentUser = userService.getUserByEmail(email);
-        AuthenticationResponse.UserLogin userLogin = new AuthenticationResponse.UserLogin();
+        LoginResponseDto.UserLogin userLogin = new LoginResponseDto.UserLogin();
 
         if (currentUser != null) {
             userLogin.setId(currentUser.getId());
@@ -97,11 +97,11 @@ public class AuthController {
             System.out.println("Invalid Refresh Token");
         }
 
-        AuthenticationResponse res = new AuthenticationResponse();
+        LoginResponseDto res = new LoginResponseDto();
         User currentUserDB = userService.getUserByEmail(email);
 
         if (currentUserDB != null) {
-            AuthenticationResponse.UserLogin userLogin = new AuthenticationResponse.UserLogin(
+            LoginResponseDto.UserLogin userLogin = new LoginResponseDto.UserLogin(
                     currentUserDB.getId(), currentUserDB.getEmail(), currentUserDB.getName());
             res.setUser(userLogin);
         }
