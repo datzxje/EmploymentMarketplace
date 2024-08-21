@@ -8,6 +8,7 @@
     - JWT (JSON Web Token)
     - Maven
     - Lombok
+    - MapStruct
     - MySQL
 - IDE:
     - IntelliJ IDEA
